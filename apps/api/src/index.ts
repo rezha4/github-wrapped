@@ -1,9 +1,55 @@
-import { Hono } from 'hono'
+import { graphqlServer } from "@hono/graphql-server";
+import { buildSchema } from "graphql";
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { schema } from "./graphql/schema";
+import { createResolver } from "./graphql/resolvers";
 
-const app = new Hono()
+type Bindings = { GITHUB_TOKEN: string };
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono<{ Bindings: Bindings }>();
 
-export default app
+app.use(
+  "*",
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
+
+app.get("/", (c) => {
+  return c.text("github wrapped API");
+});
+
+app.use(
+  "/graphql",
+  graphqlServer({
+    schema: buildSchema(schema),
+    rootResolver: (c) => createResolver(c.env.GITHUB_TOKEN),
+  })
+);
+
+/*
+  spec:
+  - commit calendar
+  - longest streak
+  - total commits
+  - organizations
+  - top languages
+  - github badges/achievements (not yet implemented)
+*/
+app.get("/wrapped/:username", async (c) => {
+  const username = c.req.param("username");
+  const year = Number(c.req.query("year") || "2025");
+
+  try {
+    const resolver = createResolver(c.env.GITHUB_TOKEN);
+    const data = await resolver.getUserProfile({ username, year });
+
+    return c.json(data);
+  } catch (error) {
+    return c.json({ error: error }, 500);
+  }
+});
+
+export default app;

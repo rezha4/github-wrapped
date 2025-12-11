@@ -10,13 +10,22 @@ importers:
 
   apps/api:
     dependencies:
+      '@hono/graphql-server':
+        specifier: ^0.7.0
+        version: 0.7.0(hono@4.10.8)
+      graphql:
+        specifier: ^16.12.0
+        version: 16.12.0
       hono:
         specifier: ^4.10.8
         version: 4.10.8
     devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20251211.0
+        version: 4.20251211.0
       wrangler:
         specifier: ^4.4.0
-        version: 4.53.0
+        version: 4.53.0(@cloudflare/workers-types@4.20251211.0)
 
   apps/web:
     dependencies:
@@ -197,6 +206,9 @@ packages:
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
+
+  '@cloudflare/workers-types@4.20251211.0':
+    resolution: {integrity: sha512-e87o6KbelCz7dnI5ngrGT2ca15vJZ+COb2eqJ52iDHmOaujyC6aYZ71e2vor8X6V9T6tcDElC5sAqPR93j09EA==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -554,6 +566,12 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@hono/graphql-server@0.7.0':
+    resolution: {integrity: sha512-TZIqVmcG/ULefzJtKNcNB9LKv3ZNfszwkrKNYjZD9ZSdhfglE3VEEYU6D0kNUlfjKmrhbksiHtp3G2mfMnUf1g==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      hono: '>=3.0.0'
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1261,6 +1279,10 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
+  graphql@16.12.0:
+    resolution: {integrity: sha512-DKKrynuQRne0PNpEbzuEdHlYOMksHSUI8Zc9Unei5gTsMNA2/vMpoMz/yKba50pejK56qj98qM0SjYxAKi13gQ==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
+
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
@@ -1873,6 +1895,8 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20251202.0':
     optional: true
 
+  '@cloudflare/workers-types@4.20251211.0': {}
+
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
@@ -2083,6 +2107,11 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@hono/graphql-server@0.7.0(hono@4.10.8)':
+    dependencies:
+      graphql: 16.12.0
+      hono: 4.10.8
 
   '@humanfs/core@0.19.1': {}
 
@@ -2778,6 +2807,8 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
+  graphql@16.12.0: {}
+
   has-flag@4.0.0: {}
 
   hermes-estree@0.25.1: {}
@@ -3152,7 +3183,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20251202.0
       '@cloudflare/workerd-windows-64': 1.20251202.0
 
-  wrangler@4.53.0:
+  wrangler@4.53.0(@cloudflare/workers-types@4.20251211.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.1
       '@cloudflare/unenv-preset': 2.7.13(unenv@2.0.0-rc.24)(workerd@1.20251202.0)
@@ -3163,6 +3194,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20251202.0
     optionalDependencies:
+      '@cloudflare/workers-types': 4.20251211.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
