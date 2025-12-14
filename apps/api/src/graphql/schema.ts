@@ -11,7 +11,7 @@ export const schema = `
   type ContributionDay {
     date: String!
     count: Int!
-    color: String!
+    level: Int!
   }
   
   type Language {

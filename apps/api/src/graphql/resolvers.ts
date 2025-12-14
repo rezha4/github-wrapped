@@ -19,7 +19,7 @@ type GitHubGraphQLResponse = {
             contributionDays: Array<{
               date: string;
               contributionCount: number;
-              color: string; // GitHub provides hex colors, saving us from calculating "greenness"
+              contributionLevel: string;
             }>;
           }>;
         };
@@ -64,6 +64,19 @@ type Organization = {
   totalIssues: number;
   repos: string[];
 };
+
+// Helpers
+// Maps GitHub's ContributionLevel enum to react-activity-calendar's 0-4 scale
+function mapContributionLevel(level: string): number {
+  const mapping: Record<string, number> = {
+    NONE: 0,
+    FIRST_QUARTILE: 1,
+    SECOND_QUARTILE: 2,
+    THIRD_QUARTILE: 3,
+    FOURTH_QUARTILE: 4,
+  };
+  return mapping[level as keyof typeof mapping] ?? 0;
+}
 
 // GitHub's API returns weeks in chronological order, but streak calculation
 // needs reverse order (most recent first) to detect if the user is "currently active"
@@ -180,7 +193,7 @@ export const createResolver = (githubToken: string) => {
                   contributionDays {
                     date
                     contributionCount
-                    color
+                    contributionLevel
                   }
                 }
               }
@@ -329,16 +342,22 @@ export const createResolver = (githubToken: string) => {
 
       // Flatten nested week structure because frontend only cares about individual days
       // for rendering the contribution heatmap
-      const contributionCalendar = (
+      // Replace this section in getUserProfile:
+      const contributionCalendarRaw = (
         user.contributionsCollection?.contributionCalendar?.weeks ||
         []
-      )
-        .flatMap((week) => week.contributionDays)
-        .map((day) => ({
+      ).flatMap((week) => week.contributionDays);
+
+      const contributionCalendar = contributionCalendarRaw.map(
+        (day) => ({
           date: day.date,
           count: day.contributionCount,
-          color: day.color,
-        }));
+          // Map enum string → numeric 0-4 for react-activity-calendar
+          level: mapContributionLevel(
+            day.contributionLevel
+          ),
+        })
+      );
 
       const streak = calculateStreaks(contributionCalendar);
       const topLanguages = calculateTopLanguages(
