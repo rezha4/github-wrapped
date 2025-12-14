@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.react-activity-calendar svg {
+  width: 350px;
+}
