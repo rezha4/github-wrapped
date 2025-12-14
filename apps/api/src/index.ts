@@ -12,7 +12,10 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.use(
   "*",
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",
+      "https://github-wrappped.pages.dev/",
+    ],
     credentials: true,
   })
 );
@@ -38,7 +41,7 @@ app.use(
   - top languages
   - github badges/achievements (not yet implemented)
 */
-app.get("/wrapped/:username", async (c) => {
+const getWrapped = app.get("/wrapped/:username", async (c) => {
   const username = c.req.param("username");
   const year = Number(c.req.query("year") || "2025");
 
@@ -51,5 +54,7 @@ app.get("/wrapped/:username", async (c) => {
     return c.json({ error: error }, 500);
   }
 });
+
+export type GetWrappedType = typeof getWrapped;
 
 export default app;
