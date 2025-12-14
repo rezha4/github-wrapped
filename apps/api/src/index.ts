@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://github-wrappped.pages.dev/",
+      "https://github-wrappped.pages.dev",
     ],
     credentials: true,
   })
