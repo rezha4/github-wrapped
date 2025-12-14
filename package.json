@@ -2,12 +2,10 @@
   "name": "github-wrapped",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "deploy:api": "pnpm --filter api deploy",
-    "deploy:web": "pnpm --filter web deploy"
-  },
   "keywords": [],
+  "workspaces": [
+    "apps/*"
+  ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.15.0"
