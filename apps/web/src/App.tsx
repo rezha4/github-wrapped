@@ -135,7 +135,7 @@ function App() {
         <div>
           <div
             ref={cardRef}
-            className="rounded-xl max-[400px]:w-[300px] sm:w-[400px] bg-linear-to-t from-[#57D465] via-teal-800 to-black text-white py-8"
+            className="rounded-xl max-[375px]:w-[320px] max-[400px]:w-[375px] sm:w-[400px] bg-linear-to-t from-[#57D465] via-teal-800 to-black text-white py-8"
           >
             <h1 className="text-4xl font-bold text-center text-white">
               Github Wrapped 2025
