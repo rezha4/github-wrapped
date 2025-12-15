@@ -1,4 +1,4 @@
-GitHub Wrapped is a small full‑stack app that turns your GitHub activity into a shareable “year in code” card, similar to music streaming wrapped views. Heavily inspired by [git-wrapped](https://git-wrapped.com/).  
+Inspired by [git-wrapped](https://git-wrapped.com/).  
 Issues & Pull Request are welcome!
 
 ## Tech Stack
