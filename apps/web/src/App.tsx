@@ -22,6 +22,7 @@ function App() {
   type ResType = InferResponseType<typeof $get, 200>;
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [data, setData] = useState<ResType>();
   const [userName, setUserName] = useState("");
 
@@ -30,6 +31,7 @@ function App() {
   const handleGetWrapped = async () => {
     if (!userName) return;
 
+    setError("");
     setLoading(true);
 
     try {
@@ -48,6 +50,7 @@ function App() {
 
       setData(data);
     } catch (error) {
+      setError(`Error when fetching data, ${error}`);
       console.error("Error when fetching data:", error);
     } finally {
       setLoading(false);
@@ -55,6 +58,8 @@ function App() {
   };
 
   const handleExportImage = async () => {
+    setError("");
+
     if (!cardRef.current) return;
 
     try {
@@ -68,6 +73,7 @@ function App() {
       link.href = dataUrl;
       link.click();
     } catch (error) {
+      setError(`Error exporting image, ${error}`);
       console.error("Error exporting image:", error);
     }
   };
@@ -111,6 +117,12 @@ function App() {
           >
             {loading ? "Loading..." : "Get Wrapped"}
           </button>
+
+          {error && (
+            <p className="text-xs font-medium text-center text-red-500 mt-4">
+              {error}
+            </p>
+          )}
 
           <p className="text-xs text-gray-400 mt-4">
             *we only took data that are publicly available via
@@ -270,6 +282,11 @@ function App() {
             >
               <DownloadIcon /> Download Image
             </button>
+            {error && (
+              <p className="text-xs font-medium text-center text-red-500 mt-4">
+                {error}
+              </p>
+            )}
             <a
               href="https://github.com/rezha4/github-wrapped"
               target="_blank"
